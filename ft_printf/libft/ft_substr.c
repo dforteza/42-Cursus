@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dforteza <dforteza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/28 16:43:06 by dforteza          #+#    #+#             */
-/*   Updated: 2024/09/29 17:32:54 by dforteza         ###   ########.fr       */
+/*   Created: 2024/09/28 17:50:51 by dforteza          #+#    #+#             */
+/*   Updated: 2024/09/28 21:06:07 by dforteza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t num, size_t size)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	void	*ptr;
+	size_t	s_len;
+	char	*str;
 
-	if (size != 0 && num > SIZE_MAX / size)
+	s_len = ft_strlen(s);
+	if (s == NULL)
 		return (NULL);
-	ptr = (void *)malloc(num * size);
-	if (ptr == NULL)
+	if (start >= s_len)
+		return (ft_strdup(""));
+	if (len >= s_len - start)
+		len = s_len - start;
+	str = (char *)malloc(len + 1);
+	if (str == NULL)
 		return (NULL);
-	ft_memset(ptr, 0, num * size);
-	return (ptr);
+	ft_memcpy(str, s + start, len);
+	str[len] = '\0';
+	return (str);
 }

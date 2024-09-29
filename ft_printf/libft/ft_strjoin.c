@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dforteza <dforteza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/28 16:43:06 by dforteza          #+#    #+#             */
-/*   Updated: 2024/09/29 17:32:54 by dforteza         ###   ########.fr       */
+/*   Created: 2024/09/28 17:52:39 by dforteza          #+#    #+#             */
+/*   Updated: 2024/09/29 13:43:45 by dforteza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t num, size_t size)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	void	*ptr;
+	char	*str;
+	size_t	i;
+	size_t	j;
 
-	if (size != 0 && num > SIZE_MAX / size)
+	str = (char *)malloc(sizeof(*s1) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!str)
 		return (NULL);
-	ptr = (void *)malloc(num * size);
-	if (ptr == NULL)
-		return (NULL);
-	ft_memset(ptr, 0, num * size);
-	return (ptr);
+	i = 0;
+	j = 0;
+	while (s1[i])
+	{
+		str[j++] = s1[i];
+		i++;
+	}
+	i = 0;
+	while (s2[i])
+	{
+		str[j++] = s2[i];
+		i++;
+	}
+	str[j] = 0;
+	return (str);
 }

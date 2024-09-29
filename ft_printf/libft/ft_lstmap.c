@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dforteza <dforteza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/28 16:43:06 by dforteza          #+#    #+#             */
-/*   Updated: 2024/09/29 17:32:54 by dforteza         ###   ########.fr       */
+/*   Created: 2024/09/29 14:12:28 by dforteza          #+#    #+#             */
+/*   Updated: 2024/09/29 18:41:35 by dforteza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t num, size_t size)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	void	*ptr;
+	t_list	*tmp;
+	t_list	*mapped_list;
+	void	*content;
 
-	if (size != 0 && num > SIZE_MAX / size)
+	if (!lst || !f || !del)
 		return (NULL);
-	ptr = (void *)malloc(num * size);
-	if (ptr == NULL)
-		return (NULL);
-	ft_memset(ptr, 0, num * size);
-	return (ptr);
+	mapped_list = NULL;
+	while (lst)
+	{
+		content = (*f)(lst->content);
+		tmp = ft_lstnew(content);
+		if (!tmp)
+		{
+			ft_lstclear(&mapped_list, del);
+			del(content);
+			return (NULL);
+		}
+		ft_lstadd_back(&mapped_list, tmp);
+		lst = lst->next;
+	}
+	return (mapped_list);
 }

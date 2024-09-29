@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dforteza <dforteza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/28 16:43:06 by dforteza          #+#    #+#             */
-/*   Updated: 2024/09/29 17:32:54 by dforteza         ###   ########.fr       */
+/*   Created: 2024/09/28 16:50:53 by dforteza          #+#    #+#             */
+/*   Updated: 2024/09/29 13:42:17 by dforteza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t num, size_t size)
+char	*ft_strrchr(const char *str, int c)
 {
-	void	*ptr;
+	char	*last_occurrence;
 
-	if (size != 0 && num > SIZE_MAX / size)
-		return (NULL);
-	ptr = (void *)malloc(num * size);
-	if (ptr == NULL)
-		return (NULL);
-	ft_memset(ptr, 0, num * size);
-	return (ptr);
+	last_occurrence = NULL;
+	while (*str)
+	{
+		if (*str == (unsigned char)c)
+			last_occurrence = (char *)str;
+		str++;
+	}
+	if ((unsigned char)c == '\0')
+		return ((char *)str);
+	return (last_occurrence);
 }

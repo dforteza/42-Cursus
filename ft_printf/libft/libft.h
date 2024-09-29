@@ -6,7 +6,7 @@
 /*   By: dforteza <dforteza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 16:41:56 by dforteza          #+#    #+#             */
-/*   Updated: 2024/09/29 17:31:38 by dforteza         ###   ########.fr       */
+/*   Updated: 2024/09/29 16:07:30 by dforteza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdint.h>
 
 //obligatorias
 int				ft_isalpha(int c);

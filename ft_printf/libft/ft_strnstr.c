@@ -1,26 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dforteza <dforteza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/28 16:43:06 by dforteza          #+#    #+#             */
-/*   Updated: 2024/09/29 17:32:54 by dforteza         ###   ########.fr       */
+/*   Created: 2024/09/28 16:48:24 by dforteza          #+#    #+#             */
+/*   Updated: 2024/09/28 16:50:40 by dforteza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t num, size_t size)
+char	*ft_strnstr(const char *str, const char *to_find, size_t n)
 {
-	void	*ptr;
+	size_t	i;
+	size_t	j;
+	size_t	to_find_size;
 
-	if (size != 0 && num > SIZE_MAX / size)
-		return (NULL);
-	ptr = (void *)malloc(num * size);
-	if (ptr == NULL)
-		return (NULL);
-	ft_memset(ptr, 0, num * size);
-	return (ptr);
+	to_find_size = ft_strlen(to_find);
+	i = 0;
+	if (to_find_size == 0)
+		return ((char *)&str[i]);
+	while (str[i] && i < n)
+	{
+		j = 0;
+		while (str[i + j] == to_find[j] && (i + j) < n && to_find[j] != '\0')
+		{
+			j++;
+			if (j == to_find_size)
+				return ((char *)&str[i]);
+		}
+		i++;
+	}
+	return (NULL);
 }

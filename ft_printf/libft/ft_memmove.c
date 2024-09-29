@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dforteza <dforteza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/28 16:43:06 by dforteza          #+#    #+#             */
-/*   Updated: 2024/09/29 17:32:54 by dforteza         ###   ########.fr       */
+/*   Created: 2024/09/28 16:43:30 by dforteza          #+#    #+#             */
+/*   Updated: 2024/09/29 13:36:02 by dforteza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t num, size_t size)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	void	*ptr;
+	unsigned char		*d;
+	const unsigned char	*s;
 
-	if (size != 0 && num > SIZE_MAX / size)
+	d = (unsigned char *)dest;
+	s = (const unsigned char *)src;
+	if (!dest && !src)
 		return (NULL);
-	ptr = (void *)malloc(num * size);
-	if (ptr == NULL)
-		return (NULL);
-	ft_memset(ptr, 0, num * size);
-	return (ptr);
+	if (d < s)
+	{
+		ft_memcpy(dest, src, n);
+	}
+	else
+	{
+		while (n--)
+			d[n] = s[n];
+	}
+	return (dest);
 }

@@ -6,13 +6,39 @@
 /*   By: dforteza <dforteza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 17:57:23 by dforteza          #+#    #+#             */
-/*   Updated: 2024/09/29 17:29:21 by dforteza         ###   ########.fr       */
+/*   Updated: 2024/09/29 13:45:14 by dforteza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_get_cols(char *s, char c)
+int	ft_get_rows(char *s, char c)
+{
+	int	i;
+	int	count;
+	int	max_len;
+
+	i = 0;
+	count = 0;
+	max_len = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] != c)
+			count++;
+		else
+		{
+			if (count > max_len)
+				max_len = count;
+			count = 0;
+		}
+		i++;
+	}
+	if (count > max_len)
+		max_len = count;
+	return (max_len);
+}
+
+int	ft_get_cols(char *s, char c)
 {
 	int	cols;
 	int	in_word;
@@ -49,7 +75,7 @@ static void	ft_free_matrix(char **matrix)
 	}
 }
 
-static char	*ft_copy_word(const char *s, int *j, char c)
+char	*ft_copy_word(const char *s, int *j, char c)
 {
 	int		k;
 	int		len;
