@@ -6,101 +6,61 @@
 /*   By: dforteza <dforteza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 17:08:30 by dforteza          #+#    #+#             */
-/*   Updated: 2024/09/30 20:18:34 by dforteza         ###   ########.fr       */
+/*   Updated: 2024/10/12 18:19:26 by dforteza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdarg.h>
-#include <unistd.h>
-#include "libft/libft.h"
+#include "ft_printf.h"
 
-static int	ft_putnbr_base_fd(unsigned long nbr, int base, int is_upper, int fd)
+static int	ft_format(const char str, va_list args)
 {
-	char	*digits;
-	int		count;
+	int	size;
 
-	count = 0;
-	if (is_upper)
-		digits = "0123456789ABCDEF";
+	size = 0;
+	if (str == 'c')
+		size += ft_putchar(va_arg(args, int));
+	else if (str == 's')
+		size += ft_putstr(va_arg(args, char *));
+	else if (str == 'p')
+		size += ft_putptr(va_arg(args, unsigned long long));
+	else if (str == 'd' || str == 'i')
+		size += ft_putnbr(va_arg(args, int));
+	else if (str == 'u')
+		size += ft_putnbr_unsigned(va_arg(args, unsigned int));
+	else if (str == 'x' || str == 'X')
+		size += ft_puthex(va_arg(args, unsigned int), str);
+	else if (str == '%')
+		size += ft_putchar('%');
 	else
-		digits = "0123456789abcdef";
-	if (nbr >= (unsigned long)base)
-		count += ft_putnbr_base_fd(nbr / base, base, is_upper, fd);
-	ft_putchar_fd(digits[nbr % base], fd);
-	count++;
-	return (count);
+		size += ft_putchar(str);
+	return (size);
 }
 
-static int	ft_putstr_fd_count(char *s, int fd)
-{
-	int count = 0;
-
-	while (*s)
-	{
-		ft_putchar_fd(*s++, fd);
-		count++;
-	}
-	return (count);
-}
-
-static int	ft_putnbr_fd_count(int n, int fd)
-{
-	char	*str;
-	int		count;
-
-	str = ft_itoa(n);
-	count = ft_putstr_fd_count(str, fd);
-	free(str);
-	return (count);
-}
-
-int	ft_printf(const char *format, ...)
+int	ft_printf(const char *str, ...)
 {
 	va_list	args;
 	int		i;
-	int		count;
+	int		size;
 
+	size = 0;
 	i = 0;
-	count = 0;
-	va_start(args, format);
-	while (format[i])
+	va_start(args, str);
+	while (str[i])
 	{
-		if (format[i] == '%' && format[i + 1])
+		if (str[i] == '%' && str[i + 1])
 		{
+			size += ft_format(str[i + 1], args);
 			i++;
-			if (format[i] == 's')
-				count += ft_putstr_fd_count(va_arg(args, char *), 1);
-			else if (format[i] == 'd' || format[i] == 'i')
-				count += ft_putnbr_fd_count(va_arg(args, int), 1);
-			else if (format[i] == 'c')
-			{
-				ft_putchar_fd((char)va_arg(args, int), 1);
-				count++;
-			}
-			else if (format[i] == 'u')
-				count += ft_putnbr_base_fd(va_arg(args, unsigned int), 10, 0, 1);
-			else if (format[i] == 'x')
-				count += ft_putnbr_base_fd(va_arg(args, unsigned int), 16, 0, 1);
-			else if (format[i] == 'X')
-				count += ft_putnbr_base_fd(va_arg(args, unsigned int), 16, 1, 1);
-			else if (format[i] == 'p')
-			{
-				count += ft_putstr_fd_count("0x", 1);
-				count += ft_putnbr_base_fd((unsigned long)va_arg(args, void *), 16, 0, 1);
-			}
-			else if (format[i] == '%')
-			{
-				ft_putchar_fd('%', 1);
-				count++;
-			}
+		}
+		else if (str[i] == '%' && str[i + 1] == '\0')
+		{
+			va_end(args);
+			return (size);
 		}
 		else
-		{
-			ft_putchar_fd(format[i], 1);
-			count++;
-		}
+			size += ft_putchar(str[i]);
 		i++;
 	}
 	va_end(args);
-	return (count);
+	return (size);
 }
