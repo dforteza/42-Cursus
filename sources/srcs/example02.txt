@@ -1,0 +1,6 @@
+Hola_esto_es_un_texto
+de_prueba_para
+_entender
+_el_funcionamiento_
+de_________los_file.descriptors
+.
