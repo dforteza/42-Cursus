@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dforteza <dforteza@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: dforteza <dforteza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 14:43:37 by dforteza          #+#    #+#             */
-/*   Updated: 2025/01/23 17:52:47 by dforteza         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:30:05 by dforteza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
-# endif
+# endif                                                                                                                                                                                                                                                                                                                                                                                         º                                                       # endif
 
 # ifndef OPEN_MAX
 #  define OPEN_MAX 1024
