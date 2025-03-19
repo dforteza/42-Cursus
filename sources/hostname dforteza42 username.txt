@@ -1,5 +1,0 @@
-hostname - dforteza42
-username - test_user
-ctr - dforteza42
-
-encryption passphrase - piscinadeagosto42
