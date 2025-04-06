@@ -6,7 +6,7 @@
 /*   By: dforteza <dforteza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 17:39:46 by dforteza          #+#    #+#             */
-/*   Updated: 2025/03/19 10:57:34 by dforteza         ###   ########.fr       */
+/*   Updated: 2025/04/05 14:03:26 by dforteza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,6 @@ void	exec(char *cmd, char **ev)
 		free(path);
 		exit_error();
 	}
-}
-
-int	check_envp(char **ev)
-{
-	int	i;
-	int	flag;
-
-	i = 0;
-	flag = 0;
-	while (ev[i])
-	{
-		if (ft_strncmp(ev[i], "PATH=", 5) == 0 && ev[i][6])
-		{
-			flag = 1;
-			break ;
-		}
-		i++;
-	}
-	return (flag);
 }
 
 void	child(int *fd, char **av, char **ev)
@@ -89,29 +70,39 @@ void	parent(int *fd, char **av, char **ev)
 	exec(av[3], ev);
 }
 
+static void	execute_pipex(int *fd, char **argv, char **envp)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = fork();
+	if (pid == -1)
+		exit_error();
+	if (pid == 0)
+		child(fd, argv, envp);
+	else
+	{
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+			exit(1);
+		parent(fd, argv, envp);
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
-	int		fd[2];
-	pid_t	pid;
+	int	fd[2];
 
 	if (!check_envp(envp))
 		exit_error();
-	if (argc == 5)
-	{
-		if (pipe(fd) == -1)
-			exit_error();
-		pid = fork();
-		if (pid == -1)
-			exit_error();
-		if (pid == 0)
-			child(fd, argv, envp);
-		waitpid(pid, NULL, 0);
-		parent(fd, argv, envp);
-	}
-	else
+	if (argc != 5)
 	{
 		custom_error("Error", "Wrong number of arguments");
 		custom_error("Correct Input", "./pipex <file1> <cmd1> <cmd2> <file2>");
 		exit(1);
 	}
+	if (pipe(fd) == -1)
+		exit_error();
+	execute_pipex(fd, argv, envp);
+	return (0);
 }

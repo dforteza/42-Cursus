@@ -1,0 +1,23 @@
+# Test 1: Búsqueda simple + conteo
+./pipex files/infile1.txt "grep palabra" "wc -l" out_pipex.txt
+< files/infile1.txt grep palabra | wc -l > out_bash.txt
+
+# Test 2: Transformación de texto
+./pipex files/infile2.txt "tr 'a-z' 'A-Z'" "grep HELLO" out_pipex.txt
+< files/infile2.txt tr 'a-z' 'A-Z' | grep HELLO > out_bash.txt
+
+# Test 3: Pruebas con Múltiples Comandos (6+ argumentos)
+./pipex files/infile4.txt "grep 192" "sort" "uniq" "wc -l" out_pipex.txt
+< files/infile4.txt grep 192 | sort | uniq | wc -l > out_bash.txt
+
+# Test 4: here Document
+./pipex here_doc LIMIT "grep hello" "wc -c" out_pipex.txt
+hello world
+goodbye world
+hello again
+LIMIT
+cat << LIMIT | grep hello | wc -c > out_bash.txt
+hello world
+goodbye world
+hello again
+LIMIT
