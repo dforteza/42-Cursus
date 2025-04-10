@@ -6,7 +6,7 @@
 /*   By: dforteza <dforteza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 12:36:18 by dforteza          #+#    #+#             */
-/*   Updated: 2025/04/06 11:34:11 by dforteza         ###   ########.fr       */
+/*   Updated: 2025/04/06 19:10:55 by dforteza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,7 @@
 void	here_doc_child(int *pipe_fd, char *lim)
 {
 	char	*line;
-	size_t	lim_len;
 
-	lim_len = ft_strlen(lim);
-	if (lim[lim_len - 1] == '\n')
-		lim[lim_len - 1] = '\0';
 	close(pipe_fd[0]);
 	while (1)
 	{
