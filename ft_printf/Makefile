@@ -1,49 +1,31 @@
-# Nombre del ejecutable
-NAME = libftprintf.a
+OUT = libftprintf.a
 
-# Archivo de cabecera
-HEADER = printf.h
-
-# Compilador y opciones
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-
-# Archivos de implementación
 SRC = ft_printf.c \
-	ft_utils.c \
-	ft_puthex.c \
-	ft_putptr.c
+    ft_utils.c \
+    ft_puthex.c \
+    ft_putptr.c
 
-# Archivo objeto
-OBJ = $(SRC:.c=.o)
+OBJS = ${SRC:.c=.o}
 
-# Regla por defecto
-all: $(NAME)
+CC = cc
+RM = rm -f
+CFLAGS = -Wall -Wextra -Werror
+INCLUDE = -I .
 
-# Regla para crear el ejecutable
-$(NAME): $(OBJ)
-	@echo "Compilando $(NAME)"
-	@ar rcs $(NAME) $(OBJ)
-	@ranlib $(NAME)
-	@echo "Done !"
+.c.o:
+	${CC} ${CFLAGS} ${INCLUDE} -c $< -o $@
 
-# Regla para limpiar los archivos objeto
+$(OUT): ${OBJS}
+	ar rcs ${OUT} ${OBJS}
+
+all: ${OUT}
+
 clean:
-	@echo "Remove .o  ..."
-	@rm -f $(OBJ)
-	@echo "Done !"
+	${RM} ${OBJS}
 
-# Regla para limpiar los archivos objeto y el ejecutable
 fclean: clean
-	@echo "Remove lib ..."
-	@rm -f $(NAME)
-	@echo "Done !"
+	${RM} ${OUT}
 
-# Regla para recompilar todo
 re: fclean all
-
-# Regla para compilar los archivos objeto
-%.o: %.c $(HEADER)
-	$(CC) $(CFLAGS) -c $< -o $@
 
 .PHONY: all clean fclean re
