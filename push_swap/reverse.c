@@ -6,7 +6,7 @@
 /*   By: dforteza <dforteza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 00:00:41 by dforteza          #+#    #+#             */
-/*   Updated: 2025/05/27 00:09:20 by dforteza         ###   ########.fr       */
+/*   Updated: 2025/05/27 11:32:33 by dforteza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	rotate(t_stack **top)
 
 void	rotate_move(t_stack **sa, t_stack **sb, char *choice)
 {
-	// 1- EJECUTAR ROTACIÓN SEGÚN LA OPERACIÓN SOLICITADA
 	if (ft_strcmp(choice, "ra") == 0)
 		rotate(sa);
 	else if (ft_strcmp(choice, "rb") == 0)
@@ -82,7 +81,6 @@ void	rotate_move(t_stack **sa, t_stack **sb, char *choice)
 		reverse(sb);
 	}
 
-	// 2- IMPRIMIR LA OPERACIÓN REALIZADA
 	ft_putstr(choice);
 	ft_putstr("\n");
 }
